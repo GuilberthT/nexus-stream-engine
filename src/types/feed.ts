@@ -6,3 +6,5 @@ export interface FeedEvent {
     message: string,
     severity: FeedSeverity,  
 }
+
+export type ConnectionStatus = 'connecting' | 'connected' | 'offline' | 'paused'

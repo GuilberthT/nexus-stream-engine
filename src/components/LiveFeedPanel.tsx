@@ -1,5 +1,5 @@
 import { useLiveFeed } from "../hooks/useLiveFeed";
-import type { FeedSeverity } from "../types/feed";
+import type {ConnectionStatus, FeedSeverity } from "../types/feed";
 
 const SEVERITY_STYLES: Record<FeedSeverity, string> = {
   info: 'border-cyan-400/20 bg-cyan-400/10 text-cyan-400',
@@ -8,8 +8,16 @@ const SEVERITY_STYLES: Record<FeedSeverity, string> = {
   error: 'border-red-400/20 bg-red-400/10 text-red-400',
 }
 
+const STATUS_CONFIG: Record<ConnectionStatus, { label: string; dotClass: string }> = {
+  connected: { label: 'Conectado', dotClass: 'animate-pulse bg-emerald-400' },
+  connecting: { label: 'Reconectando…', dotClass: 'animate-pulse bg-amber-400' },
+  offline: { label: 'Sem conexão', dotClass: 'bg-red-400' },
+  paused: { label: 'Pausado', dotClass: 'bg-slate-600' },
+}
+
 export function LiveFeedPanel() {
-    const { events, isPaused, pause, resume } = useLiveFeed()
+    const { events, status, isPaused, pause, resume  } = useLiveFeed()
+    const statusConfig = STATUS_CONFIG[status]
 
     return (
         <section className="rounded-2xl border border-slate-800 bg-slate-950 p-4 sm:p-6">
@@ -17,11 +25,9 @@ export function LiveFeedPanel() {
                 <div>
                 <h2 className= "text-lg font-semibold text-slate-100">Feed ao vivo</h2>
                 <p className="flex items-center gap-2 text-xs text-slate-500">
-                    <span
-                        className={`h-2 w-2 rounded-full ${isPaused ? 'bg-slate-600' : 'animate-pulse bg-emerald-400'}`}
-                    />   
-                    {isPaused ? 'Pausado' : 'Recebendo eventos'} · {events.length} eventos
-                    </p>   
+  <span className={`h-2 w-2 rounded-full ${statusConfig.dotClass}`} />
+  {statusConfig.label} · {events.length} eventos
+</p>
                 </div>
                 <button onClick={isPaused ? resume : pause}
                     className="rounded-lg border border-slate-800 bg-slate-900 px-3 py-1.5 text-violet-400 transition hover:border-violet-400/50"
@@ -29,6 +35,11 @@ export function LiveFeedPanel() {
                     {isPaused ? 'Retomar' : 'Pausar'}
                 </button>
             </header>
+            {status === 'offline' && (
+                <p className="mb-4 rounded-lg border border-red-900/50 bg-red-950/30 px-3 py-2 text-sm text-red-400">
+                    Você está sem internet. O feed volta automaticamente quando a conexão retornar.
+                </p>
+            )}
             {events.length === 0 ? (
                 <p className="py-8 text-center text-sm text-slate-500">Aguardando o primeiro evento</p>
             ) : (
