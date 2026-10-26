@@ -1,19 +1,36 @@
-import { createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
-import { RootLayout } from "./components/RootLayout";
-import { DashboardPage } from "./pages/DashboardPage";
-import { AnalyticsPage } from "./pages/AnalyticsPage";
-import { NotFoundPage } from "./pages/NotFoundPage";
-import { StreamErrorPage } from "./pages/StreamErrorPage";
+import {
+  createRootRoute,
+  createRoute,
+  createRouter,
+} from '@tanstack/react-router'
+import { RootLayout } from './components/RootLayout'
+import { DashboardPage } from './pages/DashboardPage'
+import { AnalyticsPage } from './pages/AnalyticsPage'
+import { NotFoundPage } from './pages/NotFoundPage'
+import { StreamErrorPage } from './pages/StreamErrorPage'
+import { FEED_SEVERITIES, type FeedSeverity } from './types/feed'
 
 const rootRoute = createRootRoute({
-    component: RootLayout,
-    notFoundComponent: NotFoundPage,
+  component: RootLayout,
+  notFoundComponent: NotFoundPage,
 })
 
+function isFeedSeverity(value: unknown): value is FeedSeverity {
+  return (
+    typeof value === 'string' &&
+    (FEED_SEVERITIES as readonly string[]).includes(value)
+  )
+}
+
 const indexRoute = createRoute({
-    getParentRoute: () => rootRoute,
-    path: '/',
-    component: DashboardPage,
+  getParentRoute: () => rootRoute,
+  path: '/',
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): { severity?: FeedSeverity } => ({
+    severity: isFeedSeverity(search.severity) ? search.severity : undefined,
+  }),
+  component: DashboardPage,
 })
 
 const analyticsRoute = createRoute({
@@ -41,4 +58,3 @@ declare module '@tanstack/react-router' {
     router: typeof router
   }
 }
-

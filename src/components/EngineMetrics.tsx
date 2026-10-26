@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchEngineMetrics } from "../api/metricsApi";
+import { useQuery } from '@tanstack/react-query'
+import { fetchEngineMetrics } from '../api/metricsApi'
 import type { ServerMetrics } from '../types/metrics'
 
 function ServerCard({ server }: { server: ServerMetrics }) {
@@ -12,14 +12,18 @@ function ServerCard({ server }: { server: ServerMetrics }) {
 
       <dl className="grid grid-cols-2 gap-4">
         <div>
-          <dt className="text-xs uppercase tracking-wider text-slate-500">Latência</dt>
+          <dt className="text-xs uppercase tracking-wider text-slate-500">
+            Latência
+          </dt>
           <dd className="text-2xl font-semibold tabular-nums text-cyan-400">
             {server.latencyMs}
             <span className="ml-1 text-sm text-slate-500">ms</span>
           </dd>
         </div>
         <div>
-          <dt className="text-xs uppercase tracking-wider text-slate-500">Throughput</dt>
+          <dt className="text-xs uppercase tracking-wider text-slate-500">
+            Throughput
+          </dt>
           <dd className="text-2xl font-semibold tabular-nums text-violet-400">
             {server.throughputMBps}
             <span className="ml-1 text-sm text-slate-500">MB/s</span>
@@ -30,11 +34,13 @@ function ServerCard({ server }: { server: ServerMetrics }) {
       <div className="mt-4">
         <div className="mb-1 flex justify-between text-xs">
           <span className="uppercase tracking-wider text-slate-500">CPU</span>
-          <span className="tabular-nums text-slate-300">{server.cpuUsage}%</span>
+          <span className="tabular-nums text-slate-300">
+            {server.cpuUsage}%
+          </span>
         </div>
         <div className="h-1.5 overflow-hidden rounded-full bg-slate-800">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-violet-400 transition-all duration-500"
+            className="h-full rounded-full bg-linear-to-r from-cyan-400 to-violet-400 transition-all duration-500"
             style={{ width: `${server.cpuUsage}%` }}
           />
         </div>
@@ -54,7 +60,9 @@ export function EngineMetrics() {
     <section className="rounded-2xl border border-slate-800 bg-slate-950 p-6">
       <header className="mb-6 flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-slate-100">Métricas da Engine</h2>
+          <h2 className="text-lg font-semibold text-slate-100">
+            Métricas da Engine
+          </h2>
           <p className="text-xs text-slate-500">
             {data
               ? `Coletado às ${new Date(data.collectedAt).toLocaleTimeString()}`
@@ -74,7 +82,10 @@ export function EngineMetrics() {
       {isPending && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {[1, 2, 3].map((n) => (
-            <div key={n} className="h-40 animate-pulse rounded-xl border border-slate-800 bg-slate-900" />
+            <div
+              key={n}
+              className="h-40 animate-pulse rounded-xl border border-slate-800 bg-slate-900"
+            />
           ))}
         </div>
       )}

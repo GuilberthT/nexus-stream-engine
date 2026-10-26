@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { ConnectionStatus, FeedEvent, FeedSeverity } from '../types/feed'
 
-const MOCK_MESSAGES: ReadonlyArray<{ message: string; severity: FeedSeverity }> = [
+const MOCK_MESSAGES: ReadonlyArray<{
+  message: string
+  severity: FeedSeverity
+}> = [
   { message: 'Fluxo de dados sincronizado', severity: 'info' },
   { message: 'Transação liquidada com sucesso', severity: 'success' },
   { message: 'Novo bloco de dados processado', severity: 'info' },
@@ -43,7 +46,9 @@ export function useLiveFeed({
   const [events, setEvents] = useState<FeedEvent[]>([])
   const [isPaused, setIsPaused] = useState(false)
   const [isOnline, setIsOnline] = useState(() => navigator.onLine)
-  const [connection, setConnection] = useState<'connecting' | 'connected'>('connecting')
+  const [connection, setConnection] = useState<'connecting' | 'connected'>(
+    'connecting',
+  )
 
   // Detecta a internet real do navegador
   useEffect(() => {
@@ -112,7 +117,11 @@ export function useLiveFeed({
 
   const resume = useCallback(() => setIsPaused(false), [])
 
-  const status: ConnectionStatus = isPaused ? 'paused' : !isOnline ? 'offline' : connection
+  const status: ConnectionStatus = isPaused
+    ? 'paused'
+    : !isOnline
+      ? 'offline'
+      : connection
 
   return { events, status, isPaused, pause, resume }
 }
