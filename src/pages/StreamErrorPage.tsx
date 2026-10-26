@@ -1,11 +1,12 @@
-import { Link, type ErrorComponentProps } from "@tanstack/react-router";
+import type { ErrorComponentProps } from "@tanstack/react-router";
+import { StatePanel } from "../components/StatePanel";
 
 export function StreamErrorPage({ error }: ErrorComponentProps) {
     return (
-        <section>
-            <h1>Stream inválido</h1>
-            <p>{error instanceof Error ? error.message : 'Erro desconhecido'}</p>
-            <Link to="/">Voltar ao Dashboard</Link>
-        </section>
+        <StatePanel
+            code="ERRO"
+            title="Stream inválido"
+            description={error instanceof Error ? error.message : 'Erro desconhecido'}
+        />
     )
 }

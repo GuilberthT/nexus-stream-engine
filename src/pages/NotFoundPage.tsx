@@ -1,10 +1,11 @@
-import { Link } from "@tanstack/react-router";
+import { StatePanel } from "../components/StatePanel"
 
 export function NotFoundPage() {
     return (
-        <>
-            <h1>Página não encontrada</h1>
-            <Link to="/">Voltar ao Dashboard</Link>
-        </>
+        <StatePanel
+            code='404'
+            title='Página não encontrada'
+            description='O endereço acesssao não existe na engine.'
+        />
     )
 }

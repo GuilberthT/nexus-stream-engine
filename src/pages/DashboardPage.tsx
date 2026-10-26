@@ -1,25 +1,16 @@
-import { useLiveFeed } from "../hooks/useLiveFeed"
-import { EngineMetrics } from "../components/EngineMetrics"
-
+import { EngineMetrics } from '../components/EngineMetrics'
+import { LiveFeedPanel } from '../components/LiveFeedPanel'
 
 export function DashboardPage() {
-    const {events, isPaused, pause, resume } = useLiveFeed()
+  return (
+    <section className="space-y-6">
+      <header>
+        <h1 className="text-2xl font-bold tracking-tight text-slate-100">Dashboard</h1>
+        <p className="text-sm text-slate-400">Telemetria em tempo real da engine</p>
+      </header>
 
-    return (
-        <section className="mx-auto max-w-6xl space-y-6 p-6">
-            <h1>Dashboard</h1>
-            <button onClick={isPaused ? resume : pause}>
-                {isPaused ? 'Retomar feed' : 'Pausar feed'}
-            </button>
-
-            <ul>
-                {events.map((event) => (
-                    <li key={event.id}>
-                        [{event.severity}] {new Date(event.timestamp).toLocaleDateString()} - {event.message}
-                    </li>
-                ))}
-            </ul>
-            <EngineMetrics />
-        </section>
-    )
+      <EngineMetrics />
+      <LiveFeedPanel />
+    </section>
+  )
 }
