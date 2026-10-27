@@ -35,7 +35,7 @@ Após a queda, a espera dobra entre as tentativas: 1s, 2s, 4s, até o limite de 
 O status é calculado a partir das informações que já existem, como se tem internet e se está reconectando. Se fosse um useState, eu teria que atualizar ele em vários lugares, e se esquecesse um, o app mostraria o status errado. Calculando, ele está sempre certo.
 
 ### Por que o filtro fica na URL?
-O filtro fica na URL para compartilhar o link sem perder o que já está filtrado. O usuário ganha três coisas: recarregar a página sem perder o filtro, compartilhar o link com o filtro aplicado e usar o botão Voltar do navegador para desfazer o filtro.
+O usuário ganha três coisas: recarregar a página sem perder o filtro, compartilhar o link com o filtro aplicado e usar o botão Voltar do navegador para desfazer o filtro.
 
 ### Como o TypeScript evita bugs neste projeto?
 Porque ele encontra bugs enquanto estou digitando o código, e não quando o usuário está usando o app. Por exemplo, com as rotas registradas: se eu colocar uma rota que não existe, ele dá erro antes de virar um link quebrado. Outro exemplo é o error como unknown: o TypeScript me obrigou a checar instanceof Error antes de usar .message.
